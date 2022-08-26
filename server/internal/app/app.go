@@ -1,6 +1,7 @@
 package app
 
 import (
+	"flag"
 	"math/rand"
 	"time"
 
@@ -8,11 +9,19 @@ import (
 	"github.com/arthurshafikov/faraway/server/internal/transport/tcp"
 )
 
+var quotesFilePath string
+
+func init() {
+	flag.StringVar(&quotesFilePath, "quotesFilePath", "./assets/words-of-wisdom.txt", "Path to the quotes file")
+}
+
 func Run() {
+	flag.Parse()
+
 	rand.Seed(time.Now().Unix()) // to get different quotes
 
 	services := services.NewServices(&services.Dependencies{
-		QuotesFilePath: "./assets/words-of-wisdom.txt", // todo config
+		QuotesFilePath: quotesFilePath,
 	})
 
 	handler := tcp.NewHandler(services)
