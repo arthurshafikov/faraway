@@ -11,6 +11,6 @@ run: build
 	 $(BIN)
 
 test: 
-	go test --short -race ./internal/... ./pkg/...
+	go test --short -race ./internal/...
 
 .PHONY: build test
