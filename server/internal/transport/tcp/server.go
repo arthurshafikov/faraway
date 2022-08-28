@@ -32,6 +32,6 @@ func (s *TcpServer) Run() {
 		if err != nil {
 			log.Fatalln(err)
 		}
-		go s.handler.handleIncomingRequest(conn)
+		go s.handler.openNewConnection(conn)
 	}
 }
