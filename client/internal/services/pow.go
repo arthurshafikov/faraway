@@ -30,9 +30,11 @@ func (pow *ProofOfWorkService) FindNonce(data []byte, difficulty int) int {
 		intHash.SetBytes(hash)
 
 		if intHash.Cmp(target) == -1 {
+			// I would've removed these fmts in the real application, but there I left them just for you
 			fmt.Printf("Nonce = %v\n", nonce)
 			fmt.Printf("Result = %s\n", intHash.String())
 			fmt.Printf("Target = %s\n", target.String())
+			// You can make sure that the result is less than the target
 			return nonce
 		}
 	}
