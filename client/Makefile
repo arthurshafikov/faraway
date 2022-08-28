@@ -21,6 +21,3 @@ up:
 
 down:
 	docker-compose -f ${DOCKER_COMPOSE_FILE} -p ${APP_NAME} down --volumes
-
-mocks:
-	mockgen -source=./internal/services/services.go -destination ./internal/services/mocks/mock.go
