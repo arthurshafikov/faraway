@@ -34,7 +34,7 @@ func (h *Handler) openNewConnection(conn net.Conn) {
 	nonce := h.getNonceFromTheResponse(conn)
 
 	if h.services.ProofOfWorkChecker.CheckNonce([]byte(hash), nonce) {
-		if _, err := conn.Write(h.services.Quotes.GetQuote()); err != nil {
+		if _, err := conn.Write(bytes.Join([][]byte{h.services.Quotes.GetQuote(), []byte("\n")}, []byte{})); err != nil {
 			log.Println(err)
 		}
 	}
