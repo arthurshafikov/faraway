@@ -27,7 +27,7 @@ func (pow *ProofOfWorkService) FindNonce(data []byte, difficulty int) int {
 	for nonce := 0; nonce < math.MaxInt64; nonce++ {
 		hash = pow.hashService.Hash(bytes.Join([][]byte{data, []byte(fmt.Sprintf("%v", nonce))}, []byte{}))
 
-		intHash.SetBytes(hash[:])
+		intHash.SetBytes(hash)
 
 		if intHash.Cmp(target) == -1 {
 			fmt.Printf("Nonce = %v\n", nonce)

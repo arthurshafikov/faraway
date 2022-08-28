@@ -4,8 +4,7 @@ import (
 	"crypto/sha256"
 )
 
-type HashService struct {
-}
+type HashService struct{}
 
 func NewHashService() *HashService {
 	return &HashService{}
