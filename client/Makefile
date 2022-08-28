@@ -17,7 +17,7 @@ test:
 .PHONY: build test
 
 up:
-	docker-compose -f ${DOCKER_COMPOSE_FILE} -p ${APP_NAME} up -d --build
+	docker-compose -f ${DOCKER_COMPOSE_FILE} -p ${APP_NAME} up --build
 
 down:
 	docker-compose -f ${DOCKER_COMPOSE_FILE} -p ${APP_NAME} down --volumes
