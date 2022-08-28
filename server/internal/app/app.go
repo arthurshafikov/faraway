@@ -21,9 +21,10 @@ func Run() {
 	rand.Seed(time.Now().Unix()) // to get different quotes
 
 	services := services.NewServices(&services.Dependencies{
-		QuotesFilePath: quotesFilePath,
+		QuotesFilePath:        quotesFilePath,
+		ProofOfWorkDifficulty: 15,
 	})
 
 	handler := tcp.NewHandler(services)
-	tcp.NewTcpServer(handler, ":8090").Run() // todo config
+	tcp.NewTcpServer(handler, ":8090").Run()
 }

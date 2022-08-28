@@ -3,6 +3,7 @@ package services
 type Services struct {
 	Quotes
 	Hash
+	ProofOfWorkChecker
 }
 
 type Quotes interface {
@@ -14,16 +15,24 @@ type Hash interface {
 	RandomHash() string
 }
 
+type ProofOfWorkChecker interface {
+	CheckNonce(hash, nonce []byte) bool
+	GetDifficulty() int
+}
+
 type Dependencies struct {
-	QuotesFilePath string
+	QuotesFilePath        string
+	ProofOfWorkDifficulty int
 }
 
 func NewServices(deps *Dependencies) *Services {
 	quoteService := NewQuoteService(deps.QuotesFilePath)
 	hash := NewHashService()
+	proofOfWorkChecker := NewProofOfWorkCheckerService(hash, deps.ProofOfWorkDifficulty)
 
 	return &Services{
-		Quotes: quoteService,
-		Hash:   hash,
+		Quotes:             quoteService,
+		Hash:               hash,
+		ProofOfWorkChecker: proofOfWorkChecker,
 	}
 }
