@@ -27,7 +27,7 @@ func (pow *ProofOfWorkCheckerService) CheckNonce(hash, nonce []byte) bool {
 	result := pow.hash.GetHash(bytes.Join([][]byte{hash, nonce}, []byte{}))
 
 	var intHash big.Int
-	intHash.SetBytes(result[:])
+	intHash.SetBytes(result)
 	fmt.Println("=============================================")
 	fmt.Printf("Result int %s\n", intHash.String())
 	fmt.Printf("Target int %s\n", pow.target.String())

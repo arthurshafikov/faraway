@@ -30,7 +30,7 @@ func TestGetQuote(t *testing.T) {
 
 func createFakeQuotesFile(t *testing.T) {
 	t.Helper()
-	if err := os.WriteFile(quotesFilePath, quotes, 0644); err != nil {
+	if err := os.WriteFile(quotesFilePath, quotes, 0600); err != nil { //nolint:gofumpt
 		t.Fatal(err)
 	}
 }

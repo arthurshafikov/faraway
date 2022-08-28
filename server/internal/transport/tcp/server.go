@@ -5,19 +5,19 @@ import (
 	"net"
 )
 
-type TcpServer struct {
+type Server struct {
 	handler *Handler
 	address string
 }
 
-func NewTcpServer(handler *Handler, address string) *TcpServer {
-	return &TcpServer{
+func NewServer(handler *Handler, address string) *Server {
+	return &Server{
 		handler: handler,
 		address: address,
 	}
 }
 
-func (s *TcpServer) Run() {
+func (s *Server) Run() {
 	listen, err := net.Listen("tcp", s.address)
 	if err != nil {
 		log.Fatalln(err)
@@ -30,7 +30,8 @@ func (s *TcpServer) Run() {
 	for {
 		conn, err := listen.Accept()
 		if err != nil {
-			log.Fatalln(err)
+			log.Println(err)
+			break
 		}
 		go s.handler.openNewConnection(conn)
 	}

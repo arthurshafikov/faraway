@@ -23,5 +23,5 @@ func NewQuoteService(quotesFilePath string) *QuoteService {
 }
 
 func (s *QuoteService) GetQuote() []byte {
-	return s.quoutes[rand.Intn(len(s.quoutes))]
+	return s.quoutes[rand.Intn(len(s.quoutes))] //nolint:gosec
 }

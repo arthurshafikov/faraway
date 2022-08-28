@@ -26,5 +26,5 @@ func Run() {
 	})
 
 	handler := tcp.NewHandler(services)
-	tcp.NewTcpServer(handler, ":8090").Run()
+	tcp.NewServer(handler, ":8090").Run()
 }

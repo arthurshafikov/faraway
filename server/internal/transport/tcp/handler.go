@@ -27,7 +27,8 @@ func (h *Handler) openNewConnection(conn net.Conn) {
 		}
 	}()
 	hash := h.services.Hash.RandomHash()
-	if _, err := conn.Write([]byte(fmt.Sprintf("%s %v\n", hash, h.services.ProofOfWorkChecker.GetDifficulty()))); err != nil {
+	hashWithDiffuculty := []byte(fmt.Sprintf("%s %v\n", hash, h.services.ProofOfWorkChecker.GetDifficulty()))
+	if _, err := conn.Write(hashWithDiffuculty); err != nil {
 		log.Println(err)
 	}
 

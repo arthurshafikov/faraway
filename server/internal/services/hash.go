@@ -6,8 +6,7 @@ import (
 	"math/rand"
 )
 
-type HashService struct {
-}
+type HashService struct{}
 
 func NewHashService() *HashService {
 	return &HashService{}
@@ -21,7 +20,7 @@ func (h *HashService) GetHash(data []byte) []byte {
 
 func (h *HashService) RandomHash() string {
 	randomBytes := make([]byte, 10)
-	rand.Read(randomBytes)
+	rand.Read(randomBytes) //nolint:gosec
 
 	return fmt.Sprintf("%x", h.GetHash(randomBytes))
 }
