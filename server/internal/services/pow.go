@@ -2,7 +2,6 @@ package services
 
 import (
 	"bytes"
-	"fmt"
 	"math/big"
 )
 
@@ -27,12 +26,8 @@ func (pow *ProofOfWorkCheckerService) CheckNonce(hash, nonce []byte) bool {
 	result := pow.hash.GetHash(bytes.Join([][]byte{hash, nonce}, []byte{}))
 
 	var intHash big.Int
-	intHash.SetBytes(result)
-	fmt.Println("=============================================")
-	fmt.Printf("Result int %s\n", intHash.String())
-	fmt.Printf("Target int %s\n", pow.target.String())
 
-	return intHash.Cmp(pow.target) == -1
+	return intHash.SetBytes(result).Cmp(pow.target) == -1
 }
 
 func (pow *ProofOfWorkCheckerService) GetDifficulty() int {
