@@ -1,8 +1,11 @@
 package tcp
 
 import (
+	"context"
 	"log"
 	"net"
+
+	"golang.org/x/sync/errgroup"
 )
 
 type Handler interface {
@@ -21,22 +24,35 @@ func NewServer(handler Handler, address string) *Server {
 	}
 }
 
-func (s *Server) Run() {
+func (s *Server) Run(g *errgroup.Group, gCtx context.Context) {
 	listen, err := net.Listen("tcp", s.address)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	defer func() {
+	g.Go(func() error {
+		<-gCtx.Done()
+
 		if err := listen.Close(); err != nil {
 			log.Fatalln(err)
 		}
-	}()
+
+		return nil
+	})
 	for {
 		conn, err := listen.Accept()
 		if err != nil {
+			select {
+			case <-gCtx.Done():
+				return
+			default:
+			}
 			log.Println(err)
 			break
 		}
-		go s.handler.OpenNewConnection(conn)
+		g.Go(func() error {
+			s.handler.OpenNewConnection(conn)
+
+			return nil
+		})
 	}
 }

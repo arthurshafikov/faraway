@@ -1,13 +1,16 @@
 package app
 
 import (
+	"context"
 	"flag"
+	"log"
 	"math/rand"
 	"time"
 
 	"github.com/arthurshafikov/faraway/server/internal/services"
 	"github.com/arthurshafikov/faraway/server/internal/transport/tcp"
 	"github.com/arthurshafikov/faraway/server/internal/transport/tcp/handler"
+	"golang.org/x/sync/errgroup"
 )
 
 var quotesFilePath string
@@ -26,6 +29,11 @@ func Run() {
 		ProofOfWorkDifficulty: 15,
 	})
 
+	g, gCtx := errgroup.WithContext(context.Background())
 	handler := handler.NewHandler(services)
-	tcp.NewServer(handler, ":8090").Run()
+	tcp.NewServer(handler, ":8090").Run(g, gCtx)
+
+	if err := g.Wait(); err != nil {
+		log.Fatalln(err)
+	}
 }
