@@ -7,6 +7,7 @@ import (
 
 	"github.com/arthurshafikov/faraway/server/internal/services"
 	"github.com/arthurshafikov/faraway/server/internal/transport/tcp"
+	"github.com/arthurshafikov/faraway/server/internal/transport/tcp/handler"
 )
 
 var quotesFilePath string
@@ -25,6 +26,6 @@ func Run() {
 		ProofOfWorkDifficulty: 15,
 	})
 
-	handler := tcp.NewHandler(services)
+	handler := handler.NewHandler(services)
 	tcp.NewServer(handler, ":8090").Run()
 }

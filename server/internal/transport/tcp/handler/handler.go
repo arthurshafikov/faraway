@@ -1,4 +1,4 @@
-package tcp
+package handler
 
 import (
 	"bufio"
@@ -20,7 +20,7 @@ func NewHandler(services *services.Services) *Handler {
 	}
 }
 
-func (h *Handler) openNewConnection(conn net.Conn) {
+func (h *Handler) OpenNewConnection(conn net.Conn) {
 	defer func() {
 		if err := conn.Close(); err != nil {
 			log.Println(err)

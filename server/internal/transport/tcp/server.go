@@ -5,12 +5,16 @@ import (
 	"net"
 )
 
+type Handler interface {
+	OpenNewConnection(conn net.Conn)
+}
+
 type Server struct {
-	handler *Handler
+	handler Handler
 	address string
 }
 
-func NewServer(handler *Handler, address string) *Server {
+func NewServer(handler Handler, address string) *Server {
 	return &Server{
 		handler: handler,
 		address: address,
@@ -33,6 +37,6 @@ func (s *Server) Run() {
 			log.Println(err)
 			break
 		}
-		go s.handler.openNewConnection(conn)
+		go s.handler.OpenNewConnection(conn)
 	}
 }
